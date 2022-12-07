@@ -1,32 +1,63 @@
 async function getTrendingTitles(type, page) {
-    const query = `
-    query ($type: MediaType, $page: Int) {
-        Page (page: $page, perPage: 30) {
-            pageInfo {
-                total
-                currentPage
-                lastPage
-                hasNextPage
-                perPage
-            }
-            media (type: $type, sort: TRENDING_DESC) {
-                id
-                title {
-                    english
-                    romaji
+    let query, variables;
+    if (type.toUpperCase() !== 'ALL') {
+        query = `
+            query ($type: MediaType, $page: Int) {
+                Page (page: $page, perPage: 30) {
+                    pageInfo {
+                        total
+                        currentPage
+                        lastPage
+                        hasNextPage
+                        perPage
+                    }
+                    media (type: $type, sort: TRENDING_DESC) {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        coverImage {
+                            extraLarge
+                        }
+                    }
                 }
-                coverImage {
-                    extraLarge
-                }
             }
-        }
-    }
-    `;
+        `;
 
-    const variables = {
-        type: type.toUpperCase(),
-        page
-    };
+        variables = {
+            type: type.toUpperCase(),
+            page
+        };
+    } else {
+        query = `
+            query ($page: Int) {
+                Page (page: $page, perPage: 30) {
+                    pageInfo {
+                        total
+                        currentPage
+                        lastPage
+                        hasNextPage
+                        perPage
+                    }
+                    media (sort: TRENDING_DESC) {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        coverImage {
+                            extraLarge
+                        }
+                    }
+                }
+            }
+        `;
+
+        variables = {
+            page
+        };
+    }
 
     const url = 'https://graphql.anilist.co';
     const options = {

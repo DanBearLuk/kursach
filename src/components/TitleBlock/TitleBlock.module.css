@@ -12,6 +12,7 @@
     display: block;
     margin-bottom: 15px;
     object-fit: cover;
+    background-color: var(--grey);
 }
 
 .titleBlock p {

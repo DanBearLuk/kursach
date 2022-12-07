@@ -76,6 +76,10 @@ function TitleInformation() {
     if (cof === 'CN') cof = 'China';
     if (cof === 'KR') cof = 'South Korea';
 
+    const tagsStyle = { 
+        maxHeight: isTagsExtended ? tagsRef.current.scrollHeight : 96,
+    };
+
     return (
         <Outlet centerBlock={<SearchBar />}>
             <div className={styles.titleInfoWrapper}>
@@ -89,7 +93,7 @@ function TitleInformation() {
                             {title.english ?? title.romaji}
                         </Textfit>
 
-                        <div ref={tagsRef} className={[styles.tags, isTagsExtended ? styles.extended : ''].join(' ')}>
+                        <div ref={tagsRef} className={styles.tags} style={tagsStyle}>
                             {tags.map(tag => {
                                 const classes = [styles.tag];
 

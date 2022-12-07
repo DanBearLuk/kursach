@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { findTitles, getTrendingTitles } from './api';
 
 function useTrendingTitles(type) {
@@ -22,7 +22,7 @@ function useTrendingTitles(type) {
         }
     }, [lastType, type, page]);
 
-    const update = () => setPage(page + 1);
+    const update = useCallback(() => setPage(pg => pg + 1), [setPage]);
 
     return [allTitles, update];
 }
@@ -45,15 +45,15 @@ function useTitlesSearch() {
         if (search !== '') appendNew();
     }, [search, page]);
 
-    const searchFunction = (search) => {
+    const searchFunction = useCallback((search) => {
         setSearch(search);
         setPage(1);
         setFoundTitles([]);
-    };
+    }, [setSearch, setPage, setFoundTitles]);
 
-    const update = () => {
-        if (hasNextPageRef.current) setPage(page + 1);
-    };
+    const update = useCallback(() => {
+        if (hasNextPageRef.current) setPage(pg => pg + 1);
+    }, [setPage]);
 
     return [foundTitles, searchFunction, update];
 }

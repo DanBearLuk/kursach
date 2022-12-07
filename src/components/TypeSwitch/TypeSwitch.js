@@ -6,7 +6,7 @@ function TypeSwitch() {
     const { type, setType } = useContext(TypeContext);
 
     return (
-        <div>
+        <div className={styles.typesWrapper}>
             <input 
                 type='button' 
                 name='animeTypeChoose' 
@@ -14,6 +14,15 @@ function TypeSwitch() {
                 className={styles.typeBtn} 
                 disabled={type === 'anime'}
                 onClick={() => setType('anime')} 
+                />
+
+            <input 
+                type='button' 
+                name='mangaTypeChoose' 
+                value='All' 
+                className={styles.typeBtn} 
+                disabled={type === 'all'}
+                onClick={() => setType('all')}
                 />
 
             <input 

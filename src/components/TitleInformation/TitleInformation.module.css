@@ -63,16 +63,12 @@
     flex-wrap: wrap;
     width: 100%;
     column-gap: 14px;
-    row-gap: 14px;
-    height: 90px;
+    row-gap: 18px;
+    max-height: 96px;
     margin: -6px 0 0 -6px;
-    padding: 6px;
+    padding: 8px 6px;
     overflow: hidden;
     transition: 0.5s;
-}
-
-.tags.extended {
-    height: fit-content;
 }
 
 .showAllBtn {
