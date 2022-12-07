@@ -7,6 +7,12 @@ function useTrendingTitles(type) {
     const [allTitles, setAllTitles] = useState([]);
 
     useEffect(() => {
+        setPage(1);
+        setLastType(type);
+        setAllTitles([]);
+    }, []);
+
+    useEffect(() => {
         async function appendNew() {
             const pageInfo = await getTrendingTitles(type, page);
 

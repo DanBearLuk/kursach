@@ -4,23 +4,28 @@
     display: flex;
     flex-direction: row;
     cursor: pointer;
-    column-gap: 10px;
+    column-gap: 20px;
     justify-content: center;
+    cursor: pointer;
 }
 
 .username {
     margin: 0;
     padding: 0;
     color: var(--text-color);
-    font: 400 25px Poppins;
+    font: 400 30px Poppins;
+    height: 52px;
+    line-height: 52px;
 }
 
 .personPicture {
     display: block;
-    height: 42px;
-    width: 42px;
+    height: 52px;
+    width: 52px;
     object-fit: contain;
-    border-radius: 50%;
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 5px;
     background-color: var(--grey);
 }
 

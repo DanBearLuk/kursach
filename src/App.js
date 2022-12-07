@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     createBrowserRouter,
     RouterProvider
 } from "react-router-dom";
+import { getUserInfo, createAccount, logIn } from './functional/api';
 import Home from './components/Home';
 import TitleInformation from './components/TitleInformation/TitleInformation';
 import TypeContext from './contexts/TypeContext';
@@ -24,12 +25,69 @@ function App() {
     const [user, setUser] = useState({
         isAuthorized: false,
         username: '',
-        stats: [],
-        saved: []
+        savedList: [],
+        update: async () => {
+            const result = await getUserInfo();
+
+            if (result?.success) {
+                setUser(usr => ({ 
+                    ...usr,
+                    isAuthorized: true,
+                    username: result.user.username,
+                    savedList: result.user.savedList
+                }));
+            }
+
+            return result;
+        },
+        login: async (username, password) => {
+            const result = await logIn(username, password);
+
+            if (result?.success) {
+                document.cookie = 'token=' + result.token;
+
+                setUser(usr => ({ 
+                    ...usr,
+                    isAuthorized: true,
+                    username: result.user.username,
+                    savedList: result.user.savedList
+                }));
+            }
+
+            return result;
+        },
+        signin: async (username, password) => {
+            const result = await createAccount(username, password);
+
+            if (result?.success) {
+                document.cookie = 'token=' + result.token;
+
+                setUser(usr => ({ 
+                    ...usr,
+                    isAuthorized: true,
+                    username: result.user.username,
+                    savedList: result.user.savedList
+                }));
+            }
+
+            return result;
+        }
     });
 
+    useEffect(() => {
+        async function tryLogIn() {
+            try {
+                await user.login();
+            } catch {
+            }
+        }
+
+        tryLogIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={user}>
             <TypeContext.Provider value={{ type, setType }}>
                 <RouterProvider router={router} />
             </TypeContext.Provider>

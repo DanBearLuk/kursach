@@ -26,6 +26,7 @@ function SearchOverlay() {
         }
 
         document.getElementById('searchResults').addEventListener('scroll', onScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     let pos = -200;

@@ -6,12 +6,12 @@ import Overlay from '../Overlay/Overlay';
 import styles from './AuthorizationPanel.module.css';
 
 function AuthorizationPanel() {
-    const { user } = useContext(UserContext);
+    const user = useContext(UserContext);
     const [overlayState, setOverlayState] = useState('hidden');
 
     if (user.isAuthorized) {
         return (
-            <Link to="/user">
+            <Link to="/user" style={{ textDecoration: 'none' }}>
                 <div className={styles.panel}>
                     <p className={styles.username}>{user.username}</p>
                     <img className={styles.personPicture} alt='person' src='/person.svg' />

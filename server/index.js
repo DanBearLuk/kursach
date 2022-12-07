@@ -181,7 +181,7 @@ app.post('/api/users/login', async (req, res) => {
 
 
 app.use('/api/users/getInfo', createLimiter(5 * 1000, 1));
-app.post('/api/users/getInfo', async (req, res) => {
+app.get('/api/users/getInfo', async (req, res) => {
   const auth = req.headers.authorization;
   if (!auth || auth?.indexOf('Bearer ') === -1) {
     return res.status(401).json({

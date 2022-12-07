@@ -191,7 +191,9 @@ async function findTitles(search, page) {
 
 
 async function createAccount(username, password) {
-    if (!username || !password) throw new TypeError();
+    if (!username || !password) {
+        return { success: false };
+    }
 
     const result = await fetch('http://localhost:2700/api/users/createAccount', {
         method: 'POST',
@@ -201,7 +203,36 @@ async function createAccount(username, password) {
         body: JSON.stringify({ username, password })
     });
 
-    return await result.json();
+    if (result.status !== 429) {
+        return await result.json();
+    } else {
+        return await result;    
+    }
+}
+
+
+async function getUserInfo() {
+    const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('token='))
+        ?.split('=')[1];
+
+    if (!token) {
+        return { success: false };
+    }
+
+    const result = await fetch('http://localhost:2700/api/users/getInfo', {
+        method: 'GET',
+        headers: new Headers ({
+            'Authorization': 'Bearer ' + token
+        }),
+    });
+
+    if (result.status !== 429) {
+        return await result.json();
+    } else {
+        return await result;    
+    }
 }
 
 
@@ -211,7 +242,9 @@ async function logIn(username, password) {
         .find(row => row.startsWith('token='))
         ?.split('=')[1];
 
-    if (!token && (!username || !password)) throw new TypeError();
+    if (!token && (!username || !password)) {
+        return { success: false };
+    }
 
     if (username) {
         const result = await fetch('http://localhost:2700/api/users/login', {
@@ -222,7 +255,11 @@ async function logIn(username, password) {
             body: JSON.stringify({ username, password })
         });
 
-        return await result.json();
+        if (result.status !== 429) {
+            return await result.json();
+        } else {
+            return await result;    
+        }
     }
 
     const result = await fetch('http://localhost:2700/api/users/login', {
@@ -232,8 +269,12 @@ async function logIn(username, password) {
         }),
     });
 
-    return await result.json();
+    if (result.status !== 429) {
+        return await result.json();
+    } else {
+        return await result;    
+    }
 }
 
 
-export { getTrendingTitles, getTitleInfo, findTitles };
+export { getTrendingTitles, getTitleInfo, findTitles, getUserInfo, createAccount, logIn };
