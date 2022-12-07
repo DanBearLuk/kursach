@@ -1,4 +1,19 @@
-POST localhost:2700/api/users/createAccount HTTP/1.1
+POST http://localhost:2700/api/users/createAccount HTTP/1.1
+content-type: application/json
+
+{
+    "username": "DanLuk",
+    "password": "Aaaaa"
+}
+
+###
+
+POST http://localhost:2700/api/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjcwNDM3MzI5LCJleHAiOjE2NzMwMjkzMjl9.ebpvpnVOirLZfpgTLa7eBf2flcukboYW48oQoEsqAqc
+
+###
+
+POST http://localhost:2700/api/users/login HTTP/1.1
 content-type: application/json
 
 {
