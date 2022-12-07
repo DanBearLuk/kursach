@@ -1,0 +1,149 @@
+@import url('../../index.css');
+
+.titleInfoWrapper {
+    max-width: 1650px;
+    margin: 60px auto 0 auto;
+}
+
+.leftBlock {
+    width: 395px;
+}
+
+.rightBlock {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.basicInformation {
+    display: flex;
+    height: 625px;
+    width: 100%;
+    column-gap: 50px;
+}
+
+.cover {
+    display: block;
+    width: 395px;
+    height: 570px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    background-color: var(--grey);
+}
+
+.addBtn {
+    display: block;
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--grey);
+    color: var(--text-color);
+    font: 500 22px Montserrat;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.addBtn:hover {
+    background-color: var(--red);
+    color: var(--dark-grey);
+}
+
+.title {
+    max-height: 100px;
+    width: 100%;
+    font: bold 70px Poppins;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    column-gap: 14px;
+    row-gap: 14px;
+    height: 90px;
+    margin: -6px 0 0 -6px;
+    padding: 6px;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.tags.extended {
+    height: fit-content;
+}
+
+.showAllBtn {
+    padding: 6px 11px;
+    width: fit-content;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--grey);
+    color: var(--text-color);
+    font: 500 16px Montserrat;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.showAllBtn:hover {
+    background-color: var(--red);
+    color: var(--dark-grey);
+}
+
+.tag {
+    display: inline;
+    color: var(--text-color-2);
+    font: 500 18px Montserrat;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background-color: var(--grey);
+    box-shadow: 0 0 5px 4px rgba(0, 0, 0, .25);
+    margin: 0;
+}
+
+.important {
+    color: var(--text-color);
+    background-color: var(--red);
+}
+
+.description {
+    flex-grow: 1;
+    height: 100px;
+    color: var(--text-color-2);
+    font: 500 30px Montserrat;
+    margin-top: 50px;
+}
+
+.additionalInformation {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.additionalInformation .wrapper {
+    width: 220px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 55px;
+}
+
+.attribute {
+    font: 500 24px Montserrat;
+    color: var(--text-color-2);
+    margin: 0;
+}
+
+.value {
+    font: 500 28px Montserrat;
+    color: var(--red);
+    text-transform: capitalize;
+    margin: 10px 0 0 0;
+    text-transform: lowercase;
+}
+
+.value::first-letter {
+    text-transform: uppercase;
+}

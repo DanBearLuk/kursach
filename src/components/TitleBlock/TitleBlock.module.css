@@ -1,0 +1,26 @@
+@import url('../../index.css');
+
+.titleBlock {
+    width: 235px;
+    cursor: pointer;
+}
+
+.titleBlock img {
+    width: 235px;
+    height: 330px;
+    border-radius: 12px;
+    display: block;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.titleBlock p {
+    margin: 0;
+    height: 38px;
+    color: var(--text-color-2);
+    font: 500 16px Montserrat;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

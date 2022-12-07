@@ -1,13 +1,55 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@400;500;700&family=Poppins&display=swap');
+
+:root {
+  --red: #FF5252;
+  --text-color: #FFFFFF;
+  --text-color-2: #CCCCCC;
+  --dark-grey: #292929;
+  --grey: #404040;
+  --light-grey: #5A5A5A;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  overflow-y: scroll;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: var(--dark-grey);
+  min-height: 100vh; 
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../public/dots.svg');
+  background-size: 120px;
+  opacity: .04;
+  z-index: -1;
+}
+
+* {
+  scrollbar-width: 16px;
+  scrollbar-color: var(--grey) var(--dark-grey);
+}
+
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--dark-grey);
+  border-radius: 16px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--grey);
+  border-radius: 10px;
+  border: 3px solid var(--dark-grey);
 }

@@ -1,0 +1,37 @@
+.outletWrapper {
+    margin: auto;
+    width: 100%;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.outletWrapper header {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    color: white;
+    width: 1415px;
+    max-width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.outletWrapper header div:nth-child(even) {
+    justify-self: right;
+}
+
+.outletWrapper header div:nth-child(odd) {
+    justify-self: left;
+}
+
+.outletWrapper header div:nth-child(2) {
+    padding-right: 25px;
+}
+
+.outletWrapper header div:nth-child(3) {
+    padding-left: 25px;
+}
+
+.logo {
+    display: block;
+    width: 144px;
+}

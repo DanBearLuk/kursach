@@ -1,0 +1,20 @@
+@import url('../../index.css');
+
+.authorizationBtn {
+    height: 42px;
+    width: 112px;
+    font: 400 25px Poppins;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logInBtn {
+    background: none;
+    color: var(--text-color);
+}
+
+.signInBtn {
+    background: var(--red);
+    color: var(--dark-grey);
+}

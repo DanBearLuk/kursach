@@ -1,0 +1,25 @@
+@import url('../../index.css');
+
+.searchBarWrapper {
+    position: relative;
+}
+
+.searchBarWrapper input {
+    height: 50px;
+    width: 285px;
+    display: block;
+    border-radius: 50px;
+    background: var(--grey);
+    border: none;
+    cursor: pointer;
+}
+
+.searchBarWrapper img {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(calc(-50% + 1px));
+    height: 45px;
+    display: block;
+    pointer-events: none;
+}

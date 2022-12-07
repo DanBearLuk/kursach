@@ -1,0 +1,28 @@
+@import url(../../index.css);
+
+.typeBtn {
+    background: #404040;
+    border: none;
+    width: 135px;
+    height: 40px;
+    color: var(--text-color);
+    font: 400 23px Poppins;
+    transition: 0.2s;
+}
+
+.typeBtn:not(:disabled) {
+    cursor: pointer;
+}
+
+.typeBtn:disabled {
+    background-color: var(--red);
+}
+
+.typeBtn:first-child {
+    border-radius: 8px 0 0 8px;
+    margin-right: 5px;
+}
+
+.typeBtn:last-child {
+    border-radius: 0 8px 8px 0;
+}

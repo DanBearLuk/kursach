@@ -1,0 +1,55 @@
+@import url('../../index.css');
+
+.searchOverlayWrapper {
+    max-width: 800px;
+    padding: 0 20px;
+    margin: 170px auto 0 auto;
+}
+
+.searchOverlayWrapper input {
+    position: relative;
+    z-index: 10;
+}
+
+.searchOverlayWrapper input[type='text'] {
+    vertical-align: middle;
+    box-sizing: border-box;
+    height: 75px;
+    width: calc(100% - 140px);
+    border-radius: 50px;
+    background: var(--grey);
+    border: none;
+    margin-right: 20px;
+    padding: 0 35px;
+    color: var(--text-color);
+    font: 45px Poppins;
+}
+
+.searchOverlayWrapper input[type='text']:focus {
+    outline: none;
+}
+
+.searchOverlayWrapper input[type='image'] {
+    vertical-align: middle;
+    height: 75px;
+    width: 120px;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--red);
+}
+
+.searchResultsWrapper {
+    margin-top: -37.5px;
+    width: 100%;
+    height: calc(100vh - 207.5px);
+    overflow: hidden;
+}
+
+.searchResults {
+    padding-top: 100px;
+    height: 100%;
+    width: calc(100% + 16px);
+    overflow-y: scroll;
+    box-sizing: border-box;
+    mask-image: linear-gradient(transparent 0%, black 60px);
+}
