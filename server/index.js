@@ -143,10 +143,14 @@ app.post('/api/users/login', async (req, res) => {
           message: 'Unauthorized HTTP'
         });
       }
+
+      const user = await usersCollection.findOne({ _id: payload.id });
+      const jwt = await createToken(user._id);
   
       return res.status(200).json({
         success: true,
-        user: await usersCollection.findOne({ _id: payload.id })
+        user,
+        token: jwt
       });
     } catch {
       return res.status(401).json({
@@ -173,6 +177,43 @@ app.post('/api/users/login', async (req, res) => {
     user,
     token: jwt
   });
+});
+
+
+app.use('/api/users/getInfo', createLimiter(5 * 1000, 1));
+app.post('/api/users/getInfo', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (!auth || auth?.indexOf('Bearer ') === -1) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized HTTP'
+    });
+  }
+
+  const token = req.headers.authorization.replace('Bearer ', '');
+
+  try {
+    const { payload } = await jose.jwtVerify(token, secret);
+
+    if (payload.exp >= Date.now()) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized HTTP'
+      });
+    }
+
+    const user = await usersCollection.findOne({ _id: payload.id });
+
+    return res.status(200).json({
+      success: true,
+      user
+    });
+  } catch {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized HTTP'
+    });
+  }
 });
 
 

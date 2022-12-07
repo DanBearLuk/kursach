@@ -191,7 +191,48 @@ async function findTitles(search, page) {
 
 
 async function createAccount(username, password) {
-    fetch('http://localhost:2700/api/users/createAccount')
+    if (!username || !password) throw new TypeError();
+
+    const result = await fetch('http://localhost:2700/api/users/createAccount', {
+        method: 'POST',
+        headers: new Headers ({
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({ username, password })
+    });
+
+    return await result.json();
+}
+
+
+async function logIn(username, password) {
+    const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('token='))
+        ?.split('=')[1];
+
+    if (!token && (!username || !password)) throw new TypeError();
+
+    if (username) {
+        const result = await fetch('http://localhost:2700/api/users/login', {
+            method: 'POST',
+            headers: new Headers ({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({ username, password })
+        });
+
+        return await result.json();
+    }
+
+    const result = await fetch('http://localhost:2700/api/users/login', {
+        method: 'POST',
+        headers: new Headers ({
+            'Authorization': 'Bearer ' + token
+        }),
+    });
+
+    return await result.json();
 }
 
 

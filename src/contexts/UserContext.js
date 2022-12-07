@@ -4,7 +4,9 @@ const UserContext = React.createContext({
     isAuthorized: false,
     username: '',
     savedList: [],
-    update: () => {}
+    update: () => {},
+    login: (username, password) => {},
+    signin: (username, password) => {}
 });
 
 export default UserContext;
