@@ -190,4 +190,9 @@ async function findTitles(search, page) {
 }
 
 
+async function createAccount(username, password) {
+    fetch('http://localhost:2700/api/users/createAccount')
+}
+
+
 export { getTrendingTitles, getTitleInfo, findTitles };

@@ -3,8 +3,8 @@ import React from 'react';
 const UserContext = React.createContext({
     isAuthorized: false,
     username: '',
-    stats: [],
-    saved: []
+    savedList: [],
+    update: () => {}
 });
 
 export default UserContext;

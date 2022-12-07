@@ -5,7 +5,7 @@
     cursor: pointer;
 }
 
-.titleBlock img {
+.cover {
     width: 235px;
     height: 330px;
     border-radius: 12px;
@@ -15,7 +15,7 @@
     background-color: var(--grey);
 }
 
-.titleBlock p {
+.title {
     margin: 0;
     height: 38px;
     color: var(--text-color-2);

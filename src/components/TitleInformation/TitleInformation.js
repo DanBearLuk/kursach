@@ -45,7 +45,7 @@ function TitleInformation() {
                 <div className={styles.titleInfoWrapper}>
                     <div className={styles.basicInformation}>
                         <div className={styles.leftBlock}>
-                            <img alt='cover' src='/loading.svg' className={styles.cover} style={{ objectFit: 'contain' }} />
+                            <div className={[styles.cover, 'loading'].join(' ')} />
                             <input type='button' value='Add to My List' className={styles.addBtn}/>
                         </div>
                         <div className={styles.rightBlock}>

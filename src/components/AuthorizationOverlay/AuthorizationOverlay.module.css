@@ -1,0 +1,54 @@
+@import url('../../index.css');
+
+.wrapper {
+    max-width: 650px;
+    height: fit-content;
+}
+
+.authenticationForm {
+    height: fit-content;
+    width: 100%;
+}
+
+.authenticationForm input {
+    border: none;
+}
+
+.authenticationForm input:focus {
+    outline: 2px solid var(--red);
+}
+
+.authenticationForm label {
+    display: block;
+    color: var(--text-color-2);
+    font: 500 34px Poppins;
+    margin: 0 0 5px 32px;
+}
+
+.authenticationForm input:not([type="submit"]) {
+    color: var(--text-color);
+    font: 500 40px Poppins;
+    padding: 10px 32px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--grey);
+    border-radius: 100px;
+    margin: 0 0 65px 0;
+}
+
+.authenticationForm input[type="submit"] {
+    display: block;
+    color: var(--text-color);
+    font: 500 34px Poppins;
+    width: 280px;
+    background-color: var(--red);
+    border-radius: 100px;
+    cursor: pointer;
+    margin: 65px auto 0 auto;
+    transition: .3s;
+}
+
+.authenticationForm input[type="submit"]:hover {
+    background-color: var(--grey);
+    color: var(--red);
+}

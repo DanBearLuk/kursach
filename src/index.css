@@ -9,6 +9,34 @@
   --light-grey: #5A5A5A;
 }
 
+.loading {
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../public/loading.svg');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  animation: rotate 3s infinite linear forwards;
+  transform-origin: 50% 50%;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 html {
   overflow-y: scroll;
 }

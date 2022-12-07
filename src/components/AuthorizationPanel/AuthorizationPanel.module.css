@@ -1,5 +1,29 @@
 @import url('../../index.css');
 
+.panel {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    column-gap: 10px;
+    justify-content: center;
+}
+
+.username {
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font: 400 25px Poppins;
+}
+
+.personPicture {
+    display: block;
+    height: 42px;
+    width: 42px;
+    object-fit: contain;
+    border-radius: 50%;
+    background-color: var(--grey);
+}
+
 .authorizationBtn {
     height: 42px;
     width: 112px;

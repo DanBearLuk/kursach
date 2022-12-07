@@ -6,8 +6,8 @@ function TitleBlock({ id, coverSrc, title }) {
     if (id === undefined) {
         return (
             <div className={styles.titleBlock}>
-                <img alt='loading' src='/loading.svg' style={{ objectFit: 'contain' }} />
-                <p></p>
+                <div className={[styles.cover, 'loading'].join(' ')} />
+                <p className={styles.title}></p>
             </div>
         );
     }
@@ -15,8 +15,8 @@ function TitleBlock({ id, coverSrc, title }) {
     return (
         <Link to={'/info/' + id} style={{ textDecoration: 'none' }}>
             <div className={styles.titleBlock}>
-                <img alt={title + '\'s cover'} src={coverSrc} />
-                <p>{title}</p>
+                <img className={styles.cover} alt={title + '\'s cover'} src={coverSrc} />
+                <p className={styles.title}>{title}</p>
             </div>
         </Link>
     )

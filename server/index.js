@@ -104,7 +104,7 @@ app.post('/api/users/createAccount', async (req, res) => {
     _id: id,
     username,
     password: password_hash,
-    saved_list: []
+    savedList: []
   });
 
   return res.status(200).json({
@@ -172,6 +172,79 @@ app.post('/api/users/login', async (req, res) => {
     success: true,
     user,
     token: jwt
+  });
+});
+
+
+app.use('/api/editList', createLimiter(5 * 1000, 1));
+app.post('/api/editList', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (!auth || auth?.indexOf('Bearer ') === -1) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized HTTP'
+    });
+  }
+
+  if (!req.body || (!Array.isArray(req.body?.edit) && !Array.isArray(req.body?.remove))) {
+    return res.status(400).json({
+      success: false,
+      message: 'Body not found'
+    });
+  }
+
+  const token = req.headers.authorization.replace('Bearer ', '');
+
+  let payload;
+
+  try {
+    payload = (await jose.jwtVerify(token, secret)).payload;
+
+    if (payload.exp >= Date.now()) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized HTTP'
+      });
+    }
+  } catch {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized HTTP'
+    });
+  }
+
+  let { savedList } = await usersCollection.findOne({ _id: payload.id });
+
+  if (req.body.edit) {
+    for (const { id, status, finishedAmount } of req.body.edit) {
+      const result = savedList.find(el => el.id === id);
+      
+      if (result) {
+        result.status = status;
+        result.finishedAmount = finishedAmount;
+      } else {
+        savedList.push({
+          id,
+          status,
+          finishedAmount
+        });
+      }
+    }
+  }
+
+  if (req.body.remove) {
+    savedList = savedList.filter(el => !req.body.remove.includes(el.id));
+  }
+
+  const result = await usersCollection.findOneAndUpdate(
+    { _id: payload.id }, 
+    { $set: { savedList }}, 
+    { returnDocument: 'after' }
+  );
+
+  return res.status(200).json({
+    success: true,
+    savedList: result.value.savedList
   });
 });
 

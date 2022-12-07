@@ -1,4 +1,7 @@
 .overlayWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 10000;
     position: fixed;
     left: 0;
@@ -6,5 +9,5 @@
     top: 0;
     bottom: 0;
     backdrop-filter: blur(60px);
-    background-color: rgba(0, 0, 0, 0.65);
+    background-color: rgba(0, 0, 0, 0.75);
 }

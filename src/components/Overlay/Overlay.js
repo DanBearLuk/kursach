@@ -15,7 +15,7 @@ function Overlay({ children, onClose }) {
     };
 
     return ReactDOM.createPortal((
-            <div className={styles.overlayWrapper} id='overlay' onClick={closeCheck}>
+            <div className={styles.overlayWrapper} id='overlay' onMouseDown={closeCheck}>
                 {children}
             </div>
         ),
