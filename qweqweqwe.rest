@@ -1,0 +1,7 @@
+POST localhost:2700/api/users/createAccount HTTP/1.1
+content-type: application/json
+
+{
+    "username": "DanLuk",
+    "password": "Aaaaa"
+}
