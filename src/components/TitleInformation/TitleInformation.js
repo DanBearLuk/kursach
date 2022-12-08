@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import { Textfit } from 'react-textfit';
 import { getTitleInfo } from '../../functional/api';
+import AuthorizationPanel from '../AuthorizationPanel/AuthorizationPanel';
 import Outlet from '../Outlet/Outlet';
 import SearchBar from '../SearchBar/SearchBar';
 import styles from './TitleInformation.module.css';
@@ -41,7 +42,7 @@ function TitleInformation() {
 
     if (!titleInfo) {
         return (
-            <Outlet centerBlock={<SearchBar />}>
+            <Outlet centerBlock={<SearchBar />} rightBlock={<AuthorizationPanel />}>
                 <div className={styles.titleInfoWrapper}>
                     <div className={styles.basicInformation}>
                         <div className={styles.leftBlock}>
@@ -81,7 +82,7 @@ function TitleInformation() {
     };
 
     return (
-        <Outlet centerBlock={<SearchBar />}>
+        <Outlet centerBlock={<SearchBar />} rightBlock={<AuthorizationPanel />}>
             <div className={styles.titleInfoWrapper}>
                 <div className={styles.basicInformation}>
                     <div className={styles.leftBlock}>

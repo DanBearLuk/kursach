@@ -129,7 +129,11 @@ async function getTitleInfo(id) {
     };
 
     try {
-        return (await (await fetch(url, options)).json()).data.Media;
+        const media = (await (await fetch(url, options)).json()).data.Media;
+        media.description = media.description.replaceAll('<a', '<span');
+        media.description = media.description.replaceAll('</a', '</span');
+
+        return media;
     } catch (e) {
         console.error(e);
         return [];
@@ -187,6 +191,71 @@ async function findTitles(search, page) {
         console.error(e);
         return [];
     }
+}
+
+
+async function findTitlesById(ids) {
+    const query = `
+    query ($ids: [Int], $page: Int) {
+        Page (page: $page, perPage: 50) {
+            pageInfo {
+                total
+                currentPage
+                lastPage
+                hasNextPage
+                perPage
+            }
+            media (id_in: $ids) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                description
+                coverImage {
+                    extraLarge
+                }
+                type
+                episodes
+                chapters
+            }
+        }
+    }
+    `;
+
+    let page = 1, result;
+    const infos = [];
+    do {
+        const variables = {
+            ids,
+            page
+        };
+
+        const url = 'https://graphql.anilist.co';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query,
+                variables: variables
+            })
+        };
+
+        try {
+            result = (await (await fetch(url, options)).json()).data.Page;
+            infos.push(...result.media);
+        } catch (e) {
+            console.error(e);
+            return infos;
+        }
+
+        page++;
+    } while (result.pageInfo.hasNextPage);
+
+    return infos;
 }
 
 
@@ -277,4 +346,12 @@ async function logIn(username, password) {
 }
 
 
-export { getTrendingTitles, getTitleInfo, findTitles, getUserInfo, createAccount, logIn };
+export { 
+    getTrendingTitles, 
+    getTitleInfo, 
+    findTitles, 
+    getUserInfo, 
+    createAccount, 
+    logIn, 
+    findTitlesById 
+};

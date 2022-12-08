@@ -8,14 +8,18 @@ content-type: application/json
 
 ###
 
-POST http://localhost:2700/api/api/editList HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjcwNDM3MzI5LCJleHAiOjE2NzMwMjkzMjl9.ebpvpnVOirLZfpgTLa7eBf2flcukboYW48oQoEsqAqc
-
+POST http://localhost:2700/api/editList HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjcwNDM5NzgwLCJleHAiOjE2NzMwMzE3ODB9.9_ZCM7-Kyta9F-BpbGL71EntO0YXrK0RX5umEVOkWs8
 content-type: application/json
 
 {
-    "id": 1800,
-    "page": 130
+    "remove": [
+        {
+            "id": 1611,
+            "finishedAmount": 160,
+            "status": "Planning"
+        }
+    ]
 }
 
 ###

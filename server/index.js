@@ -71,7 +71,7 @@ async function createToken(id) {
 }
 
 
-app.use('/api/users/createAccount', createLimiter(5  * 1000, 1));
+app.use('/api/users/createAccount', createLimiter(1  * 60 * 1000, 1));
 app.post('/api/users/createAccount', async (req, res) => {
   if (!req.body) {
     return res.status(400).json({
@@ -115,7 +115,7 @@ app.post('/api/users/createAccount', async (req, res) => {
 });
 
 
-app.use('/api/users/login', createLimiter(5 * 1000, 1));
+app.use('/api/users/login', createLimiter(3 * 1000, 1));
 app.post('/api/users/login', async (req, res) => {
   let hasToken = false;
 
@@ -180,7 +180,7 @@ app.post('/api/users/login', async (req, res) => {
 });
 
 
-app.use('/api/users/getInfo', createLimiter(5 * 1000, 1));
+app.use('/api/users/getInfo', createLimiter(1 * 1000, 1));
 app.get('/api/users/getInfo', async (req, res) => {
   const auth = req.headers.authorization;
   if (!auth || auth?.indexOf('Bearer ') === -1) {

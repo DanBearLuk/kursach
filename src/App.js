@@ -8,6 +8,7 @@ import Home from './components/Home';
 import TitleInformation from './components/TitleInformation/TitleInformation';
 import TypeContext from './contexts/TypeContext';
 import UserContext from './contexts/UserContext';
+import UserProfile from './components/UserProfile/UserProfile';
 
 function App() {
     const router = createBrowserRouter([
@@ -18,11 +19,16 @@ function App() {
         {
             path: "/info/:id",
             element: <TitleInformation />,
+        },
+        {
+            path: "/user",
+            element: <UserProfile />,
         }
     ]);
 
     const [type, setType] = useState('anime');
     const [user, setUser] = useState({
+        isChecked: false,
         isAuthorized: false,
         username: '',
         savedList: [],
@@ -38,6 +44,10 @@ function App() {
                 }));
             }
 
+            setUser(usr => ({ 
+                ...usr,
+                isChecked: true
+            }));
             return result;
         },
         login: async (username, password) => {
@@ -54,6 +64,10 @@ function App() {
                 }));
             }
 
+            setUser(usr => ({ 
+                ...usr,
+                isChecked: true
+            }));
             return result;
         },
         signin: async (username, password) => {
@@ -70,7 +84,22 @@ function App() {
                 }));
             }
 
+            setUser(usr => ({ 
+                ...usr,
+                isChecked: true
+            }));
             return result;
+        },
+        logout: async () => {
+            document.cookie = '';
+
+            setUser(usr => ({ 
+                ...usr,
+                isChecked: true,
+                isAuthorized: false,
+                username: '',
+                savedList: []
+            }));
         }
     });
 
