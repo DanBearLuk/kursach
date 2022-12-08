@@ -68,5 +68,5 @@
 }
 
 .rightBlock {
-    flex-wrap: 1;
+    flex-grow: 1;
 }
