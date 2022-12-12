@@ -40,7 +40,7 @@ function SearchOverlay() {
                 onChange={e => setSearchValue(e.target.value)}
                 onKeyDown={onKeyDown}
                 />
-            <input type='image' src='search-outline.svg' alt='search button' onClick={() => search(searchValue)}/>
+            <input type='image' src='/search-outline.svg' alt='search button' onClick={() => search(searchValue)}/>
 
             <div className={styles.searchResultsWrapper}>
                 <div id='searchResults' className={styles.searchResults}>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Navigate } from 'react-router';
 import TypeContext from '../../contexts/TypeContext';
 import UserContext from '../../contexts/UserContext';
@@ -14,6 +14,10 @@ function UserProfile() {
 
     const [savedList, setSavedList] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
+    const changesRef = useRef({
+        remove: [],
+        edit: []
+    });
 
     if (user.isChecked && !user.isAuthorized) {
         Navigate({ to: '/' });
@@ -24,7 +28,6 @@ function UserProfile() {
         </Outlet>
     }
 
-    /*
     useEffect(() => {
         if (user.savedList.length === 0) return;
 
@@ -43,22 +46,39 @@ function UserProfile() {
 
         setSavedList(titlesInfo);
     }, []);
-    */
 
     useEffect(() => {
-        setFilteredList(savedList.filter(s => s.type.toLowerCase() === type))
+        setFilteredList(savedList.filter(s => s.type.toLowerCase() === type));
     }, [savedList, type]);
 
-    const list = [
-        {
-            coverSrc: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx140439-qpBzXkvVqSx3.jpg',
-            title: 'OnePunchMan',
-            status: 'in progress',
-            description: 'After a disastrous defeat at the 2018 World Cup, Japan\'s team struggles to regroup. But what\'s missing? An absolute Ace Striker, who can guide them to the win. The Japan Football Union is hell-bent on creating a striker who hungers for goals and thirsts for victory, and who can be the decisive instrument in turning around a losing match...and to do so, they\'ve gathered 300 of Japan\'s best and brightest youth players. Who will emerge to lead the team...and will they be able to out-muscle and out-ego everyone who stands in their way?',
-            finishedAmount: 355,
-            total: 722
+    const onChange = (info) => {
+        const savedListCopy = structuredClone(savedList);
+        const changedTitle = savedListCopy.find(t => t.id === info.id);
+        
+        if (info.status === 'removed') {
+            const index = savedListCopy.indexOf(changedTitle);
+            savedListCopy.splice(index, 1);
+
+            const changesIndex = changesRef.current.remove.indexOf(info.id);
+
+            if (changesIndex === -1) {
+                changesRef.current.remove.push(info.id);
+            }
+        } else {
+            changedTitle.status = info.status;
+            changedTitle.finishedAmount = info.finishedAmount;
+
+            const changesIndex = changesRef.current.edit.indexOf(changesRef.current.edit.find(t => t.id === info.id));
+
+            if (changesIndex === -1) {
+                changesRef.current.edit.push(info);
+            } else {
+                changesRef.current.edit[changesIndex] = info;
+            }
         }
-    ]
+
+        setSavedList(savedListCopy);
+    };
 
     return (
         <Outlet centerBlock={<TypeSwitch />}>
@@ -81,8 +101,8 @@ function UserProfile() {
                     <input className={styles.logOutBtn} type='button' value='Log Out' onClick={() => user.logout()} />
                 </div>
                 <div className={styles.rightBlock}>
-                    {list.map(title => (
-                        <SavedTitleInfo {...title} />
+                    {filteredList.map(title => (
+                        <SavedTitleInfo key={title.id} {...title} onChange={onChange} />
                     ))}
                 </div>
             </div>

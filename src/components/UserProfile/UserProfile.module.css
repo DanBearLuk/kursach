@@ -1,7 +1,7 @@
 @import url('../../index.css');
 
 .wrapper {
-    max-width: 1500px;
+    max-width: 1525px;
     display: flex;
     flex-direction: row;
     column-gap: 70px;

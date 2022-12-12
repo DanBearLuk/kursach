@@ -115,7 +115,6 @@ app.post('/api/users/createAccount', async (req, res) => {
 });
 
 
-app.use('/api/users/login', createLimiter(3 * 1000, 1));
 app.post('/api/users/login', async (req, res) => {
   let hasToken = false;
 
@@ -180,7 +179,6 @@ app.post('/api/users/login', async (req, res) => {
 });
 
 
-app.use('/api/users/getInfo', createLimiter(1 * 1000, 1));
 app.get('/api/users/getInfo', async (req, res) => {
   const auth = req.headers.authorization;
   if (!auth || auth?.indexOf('Bearer ') === -1) {
@@ -217,7 +215,7 @@ app.get('/api/users/getInfo', async (req, res) => {
 });
 
 
-app.use('/api/editList', createLimiter(5 * 1000, 1));
+app.use('/api/editList', createLimiter(2 * 1000, 1));
 app.post('/api/editList', async (req, res) => {
   const auth = req.headers.authorization;
   if (!auth || auth?.indexOf('Bearer ') === -1) {
@@ -233,6 +231,8 @@ app.post('/api/editList', async (req, res) => {
       message: 'Body not found'
     });
   }
+
+  console.log(req.body);
 
   const token = req.headers.authorization.replace('Bearer ', '');
 

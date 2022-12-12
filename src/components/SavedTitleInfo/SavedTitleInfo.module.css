@@ -2,20 +2,31 @@
 
 .wrapper {
     position: relative;
+    margin: 0 0 55px -35px;
+    padding-left: 35px;
     width: 100%;
     height: 235px;
-    background-color: transparent;
     border-radius: 0 15px 15px 0;
+    overflow: hidden;
+}
+
+.innerWrapper {
+    position: absolute;
+    right: 0;
+    width: calc(100% - 35px);
+    height: 100%;
 }
 
 .content {
+    position: absolute;
+    left: 0px;
     display: flex;
     flex-direction: row;
     column-gap: 35px;
     width: calc(100% - 35px);
     height: 100%;
-    background-color: transparent;
-    transition: .5s;
+    transition: border-radius .5s;
+    z-index: 1;
 }
 
 .cover {
@@ -44,7 +55,7 @@
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    padding-right: 45px;
+    padding-right: 70px;
 }
 
 .finishedWrapper {
@@ -55,13 +66,13 @@
     bottom: 0;
     left: 0;
     height: 30px;
-    width: calc(100% - 25px);
+    width: calc(100% - 50px);
 }
 
 .finishedBar {
     flex-grow: 1;
     background-color: var(--grey);
-    mask: url('../../../public/block.svg') repeat-x 0 0/20px 30px;
+    mask: url('../../../public/block.svg') repeat-x -4px 0/20px 30px;
 }
 
 .finishedBar .inner {
@@ -98,8 +109,10 @@
 .finishedInfo {
     margin: 0;
     height: 100%;
+    width: 102px;
     color: var(--text-color);
     font: 500 18px Montserrat;
+    text-transform: capitalize;
     line-height: 30px;
 }
 
@@ -116,6 +129,95 @@
     transition: .3s;
 }
 
-.deleteBtn:hover {
+.deleteBtn:hover, .deleting .deleteBtn {
     background: url('../../../public/trashcan-white.svg') no-repeat 50% 50%/22px 22px, var(--red);
+}
+
+.statusWrapper {
+    position: absolute;
+    bottom: 0;
+    right: 35px;
+    display: flex;
+    column-gap: 10px;
+}
+
+.statusBtn {
+    height: 38px;
+    background: var(--grey);
+    cursor: pointer;
+    font: 400 21px Poppins;
+    color: var(--text-color);
+    padding: 0 20px;
+    border: none;
+    transition: .3s;
+}
+
+.statusBtn:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.statusBtn:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.statusBtn:disabled {
+    background: var(--red);
+    cursor: default;
+}
+
+.deleting .deleteBtn {
+    animation: deleteBtnDeleting 1s ease-in-out 0s 1 forwards;
+}
+
+.deleting .innerWrapper {
+    background-color: var(--red);
+    animation: innerWrapperDeleting 1s ease-in-out 0s 1 forwards;
+}
+
+.deleting .content {
+    background-color: var(--dark-grey);
+    border-radius: 0 15px 15px 0;
+}
+
+.deleting {
+    animation: wrapperDeleting .25s ease-in-out 1s 1 forwards;
+}
+
+@keyframes innerWrapperDeleting {
+    0% {
+        right: 0px;
+    }
+    35% {
+        right: 35px;
+    }
+    50% {
+        right: 35px;
+    }
+    100% {
+        right: -100%;
+    }
+}
+
+@keyframes deleteBtnDeleting {
+    0% {
+        right: 0px;
+    }
+    35% {
+        right: -35px;
+    }
+    50% {
+        right: -35px;
+    }
+    100% {
+        right: 100%;
+    }
+}
+
+@keyframes wrapperDeleting {
+    0% {
+        margin-top: 0px;
+    }
+    100% {
+        margin-top: -290px;
+    }
 }
