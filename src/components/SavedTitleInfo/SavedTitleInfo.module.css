@@ -32,6 +32,7 @@
 .cover {
     height: 100%;
     width: 165px;
+    min-width: 165px;
     object-fit: cover;
     border-radius: 5px;
 }

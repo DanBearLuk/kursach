@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useParams } from 'react-router';
 import { Textfit } from 'react-textfit';
-import { getTitleInfo } from '../../functional/api';
+import UserContext from '../../contexts/UserContext';
+import { editList, getTitleInfo } from '../../functional/api';
 import AuthorizationPanel from '../AuthorizationPanel/AuthorizationPanel';
 import Outlet from '../Outlet/Outlet';
 import SearchBar from '../SearchBar/SearchBar';
@@ -17,11 +18,13 @@ function getMonthName(monthNumber) {
 
 
 function TitleInformation() {
-    const { id } = useParams();
+    const params = useParams();
+    const id = parseInt(params.id);
 
     const [titleInfo, setTitleInfo] = useState(null);
     const [isTagBtnVisible, setIsTagBtnVisible] = useState(false);
     const [isTagsExtended, setIsTagsExtended] = useState(false);
+    const user = useContext(UserContext);
     const tagsRef = useRef();
 
     useEffect(() => {
@@ -81,13 +84,37 @@ function TitleInformation() {
         maxHeight: isTagsExtended ? tagsRef.current.scrollHeight : 96,
     };
 
+    const addToList = async () => {
+        if (!user.isAuthorized) return;
+
+        await editList({
+            edit: [
+                {
+                    id,
+                    finishedAmount: 0,
+                    status: 'planning'
+                }
+            ]
+        });
+
+        await user.update();
+    };
+
+    const isListContain = user.savedList.find(t => t.id === id) !== undefined;
+
     return (
         <Outlet centerBlock={<SearchBar />} rightBlock={<AuthorizationPanel />}>
             <div className={styles.titleInfoWrapper}>
                 <div className={styles.basicInformation}>
                     <div className={styles.leftBlock}>
                         <img alt='cover' src={coverImage.extraLarge} className={styles.cover} />
-                        <input type='button' value='Add to My List' className={styles.addBtn} onClick={() => {}}/>
+
+                        {!isListContain && (
+                            <input type='button' value='Add to My List' className={styles.addBtn} onClick={addToList}/>
+                        )}
+                        {isListContain && (
+                            <input type='button' value='Currenty in List' className={styles.addBtn} onClick={() => {}} disabled/>
+                        )}
                     </div>
                     <div className={styles.rightBlock}>
                         <Textfit mode='multi' max={70} min={10} className={styles.title}>

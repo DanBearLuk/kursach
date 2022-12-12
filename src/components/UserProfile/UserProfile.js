@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Navigate } from 'react-router';
 import TypeContext from '../../contexts/TypeContext';
 import UserContext from '../../contexts/UserContext';
-import { findTitlesById } from '../../functional/api';
+import { editList, findTitlesById } from '../../functional/api';
 import Outlet from '../Outlet/Outlet';
 import SavedTitleInfo from '../SavedTitleInfo/SavedTitleInfo';
 import TypeSwitch from '../TypeSwitch/TypeSwitch';
@@ -31,24 +31,42 @@ function UserProfile() {
     useEffect(() => {
         if (user.savedList.length === 0) return;
 
-        const ids = user.savedList.map(t => t.id);
-        const titlesInfo = findTitlesById(ids);
+        async function update() {
+            const ids = user.savedList.map(t => t.id);
+            const titlesInfo = await findTitlesById(ids);
+    
+            setSavedList(titlesInfo.map(t => {
+                const founded = user.savedList.find(s => s.id === t.id);
+    
+                return {
+                    ...t,
+                    status: founded.status,
+                    finishedAmount: founded.finishedAmount
+                }
+            }));
+        }
 
-        titlesInfo.map(t => {
-            const founded = user.savedList.find(s => s.id === t.id);
+        update();
 
-            return {
-                ...t,
-                status: founded.status,
-                finishedAmount: founded.finishedAmount
-            }
-        });
+        const beforeunload = async () => {
+            editList(changesRef.current);
+        };
+        window.addEventListener('beforeunload', beforeunload);
 
-        setSavedList(titlesInfo);
-    }, []);
+        return async () => {
+            await editList(changesRef.current);
+            await user.update();
+
+            window.removeEventListener('beforeunload', beforeunload);
+        }
+    }, [user.savedList]);
 
     useEffect(() => {
-        setFilteredList(savedList.filter(s => s.type.toLowerCase() === type));
+        if (type === 'all') {
+            setFilteredList(savedList);
+        } else {
+            setFilteredList(savedList.filter(s => s.type.toLowerCase() === type));
+        }
     }, [savedList, type]);
 
     const onChange = (info) => {

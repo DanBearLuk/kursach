@@ -6,12 +6,14 @@ function SavedTitleInfo(props) {
         id,
         title, 
         description, 
-        coverSrc, 
+        coverImage, 
         status, 
         finishedAmount, 
-        total,
+        episodes,
+        chapters,
         onChange
     } = props;
+    const total = episodes || chapters || 0;
 
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -63,10 +65,10 @@ function SavedTitleInfo(props) {
         <div className={[styles.wrapper, isDeleting ? styles.deleting : ''].join(' ')}>
             <div className={styles.innerWrapper}>
                 <div className={styles.content}>
-                    <img className={styles.cover} src={coverSrc} alt='cover' />
+                    <img className={styles.cover} src={coverImage.extraLarge} alt='cover' />
 
                     <div className={styles.rightBlock}>
-                        <h2 className={styles.title}>{title}</h2>
+                        <h2 className={styles.title}>{title.english ?? title.romaji}</h2>
                         <p className={styles.description}>{description}</p>
 
                         {total !== 0 && (

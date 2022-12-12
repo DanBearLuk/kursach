@@ -9,7 +9,6 @@ function AuthorizationOverlay({ type }) {
     const [isError, setIsError] = useState(false);
 
     const user = useContext(UserContext);
-    console.log(user);
 
     const submit = async e => {
         e.preventDefault();

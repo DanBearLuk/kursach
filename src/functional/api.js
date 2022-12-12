@@ -1,3 +1,5 @@
+const url = document.location.protocol + '//' + document.location.hostname + ':2700';
+
 async function getTrendingTitles(type, page) {
     let query, variables;
     if (type.toUpperCase() !== 'ALL') {
@@ -264,7 +266,7 @@ async function createAccount(username, password) {
         return { success: false };
     }
 
-    const result = await fetch('http://localhost:2700/api/users/createAccount', {
+    const result = await fetch(url + '/api/users/createAccount', {
         method: 'POST',
         headers: new Headers ({
             'Content-Type': 'application/json'
@@ -290,7 +292,7 @@ async function getUserInfo() {
         return { success: false };
     }
 
-    const result = await fetch('http://localhost:2700/api/users/getInfo', {
+    const result = await fetch(url + '/api/users/getInfo', {
         method: 'GET',
         headers: new Headers ({
             'Authorization': 'Bearer ' + token
@@ -316,7 +318,7 @@ async function logIn(username, password) {
     }
 
     if (username) {
-        const result = await fetch('http://localhost:2700/api/users/login', {
+        const result = await fetch(url + '/api/users/login', {
             method: 'POST',
             headers: new Headers ({
                 'Content-Type': 'application/json'
@@ -331,7 +333,7 @@ async function logIn(username, password) {
         }
     }
 
-    const result = await fetch('http://localhost:2700/api/users/login', {
+    const result = await fetch(url + '/api/users/login', {
         method: 'POST',
         headers: new Headers ({
             'Authorization': 'Bearer ' + token
@@ -346,12 +348,41 @@ async function logIn(username, password) {
 }
 
 
+async function editList(changes) {
+    const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('token='))
+        ?.split('=')[1];
+
+    if (!token && !changes) {
+        return { success: false };
+    }
+
+    const result = await fetch(url + '/api/editList', {
+        method: 'POST',
+        headers: new Headers ({
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(changes),
+        keepalive: true
+    });
+
+    if (result.status !== 429) {
+        return await result.json();
+    } else {
+        return await result;   
+    }
+}
+
+
 export { 
     getTrendingTitles, 
     getTitleInfo, 
     findTitles, 
-    getUserInfo, 
+    getUserInfo,
     createAccount, 
     logIn, 
-    findTitlesById 
+    findTitlesById,
+    editList
 };

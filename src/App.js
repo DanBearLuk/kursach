@@ -90,7 +90,7 @@ function App() {
             }));
             return result;
         },
-        logout: async () => {
+        logout: () => {
             document.cookie = '';
 
             setUser(usr => ({ 

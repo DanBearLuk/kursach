@@ -232,8 +232,6 @@ app.post('/api/editList', async (req, res) => {
     });
   }
 
-  console.log(req.body);
-
   const token = req.headers.authorization.replace('Bearer ', '');
 
   let payload;
